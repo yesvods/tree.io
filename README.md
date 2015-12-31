@@ -138,7 +138,7 @@ keyWordFilter(key, keyWord){
 usage:
 
 ```javascript
-tree.keyWordFilter('name', '1.1');
+tree.keyWordFilter('name', 'childA');
 ```
 
 ### License
