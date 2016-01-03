@@ -99,6 +99,15 @@ you may have more operation of node by `#filter` method specified below
 ```
 tree.removeNode('1.1');
 ```
+#### #updateNode(obj)
+update tree node, obj must contain the identification of the node being update.
+
+```
+tree.updateNode({
+  name: '1.1',
+  age: 23
+})
+```
 
 #### #insertAfter(node, id)
 
@@ -144,4 +153,8 @@ tree.keyWordFilter('name', 'childA');
 ### License
 
 MIT
+
+
+
+
 
