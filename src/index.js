@@ -94,6 +94,13 @@ class Tree {
       }
     })
   }
+  updateNode(obj){
+    if(!obj[this.identification]){
+      console.warn(`identification ${this.identification} is not found in updateNode param`);
+      return;
+    }
+    _.assign(this.tree[obj[this.identification]], obj);
+  }
   insertBefore(obj, id){
     this.traversal((tree, node) => {
       if(!_.isPlainObject(node)) return;

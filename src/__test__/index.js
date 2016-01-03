@@ -73,6 +73,18 @@ describe('Tree class', function(){
     should(tree.getTree(true)).eql(expectTree);
   })
 
+  it('updateNode', function(){
+    let tree = new Tree(nestedTree);
+    let expectTree = _.clone(nestedTree, true);
+    //update tree node
+    expectTree.children[0].children[0].age = 23;
+    tree.updateNode({
+      name: '1.1',
+      age: 23,
+    });
+    should(tree.getTree(true)).eql(expectTree);
+  })
+
   it('insertBefore', function(){
     let tree = new Tree(nestedTree);
     let expectTree = _.clone(nestedTree, true);

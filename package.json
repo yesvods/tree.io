@@ -1,13 +1,12 @@
 {
   "name": "tree.io",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "JS Tree shim for browser or nodejs enhance",
   "main": "lib/index.js",
   "files": [
-    "js",
-    "tree",
-    "tree.io",
-    "shim"
+    "dist",
+    "lib",
+    "src"
   ],
   "scripts": {
     "clean": "rimraf lib dist coverage",
@@ -31,9 +30,9 @@
     "url": "git+https://github.com/yesvods/tree.io.git"
   },
   "keywords": [
-    "es6",
-    "es7",
-    "boilerplate"
+    "tree",
+    "tree.io",
+    "shim"
   ],
   "author": "Jogis",
   "license": "MIT",
