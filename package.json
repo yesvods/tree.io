@@ -1,6 +1,6 @@
 {
   "name": "tree.io",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "JS Tree shim for browser or nodejs enhance",
   "main": "lib/index.js",
   "files": [
