@@ -24,6 +24,9 @@ class Tree {
       this.tree = tree;
     }
   }
+  replaceTree(...args){
+    this.constructor(...args);
+  }
   //nested tree to flag tree
   _n2f(node){
     if(!node) return {};

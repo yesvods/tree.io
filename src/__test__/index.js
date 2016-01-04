@@ -63,6 +63,15 @@ describe('Tree class', function(){
     should(tree2.getTree()).eql(flagTree);
     should(tree2.getTree(true)).eql(nestedTree);
   })
+  
+  it('replace tree', function(){
+    let tree = new Tree(nestedTree);
+    let expectTree = _.clone(nestedTree, true);
+    //update tree node
+    expectTree.children[0].children[0].age = 23;
+    tree.replaceTree(expectTree);
+    should(tree.getTree(true)).eql(expectTree);
+  })
 
   it('removeNode', function(){
     let tree = new Tree(nestedTree);
