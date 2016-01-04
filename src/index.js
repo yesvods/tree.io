@@ -10,13 +10,13 @@ class Tree {
     if(!_.isPlainObject(tree)){
       throw Error(`tree should be plain object`); 
     }
-    options = _.assign({
+    this.options = _.assign({
       childrenPropName: 'children',
       identification: 'name',
     }, options);
     
-    this.childrenPropName = options.childrenPropName;
-    this.identification = options.identification;
+    this.childrenPropName = this.options.childrenPropName;
+    this.identification = this.options.identification;
     
     if(_.isPlainObject(tree) && _.isArray(tree.children)){
       this.tree = this._n2f(tree);
@@ -24,8 +24,8 @@ class Tree {
       this.tree = tree;
     }
   }
-  replaceTree(...args){
-    this.constructor(...args);
+  replaceTree(tree, options){
+    this.constructor(tree, options?this.options:options);
   }
   //nested tree to flag tree
   _n2f(node){
