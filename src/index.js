@@ -2,7 +2,7 @@
 
 import _ from 'lodash';
 
-export default
+
 class Tree {
   constructor(tree, options){
     //Immutable purpose
@@ -150,3 +150,4 @@ class Tree {
     })
   }
 }
+module.exports = Tree;
