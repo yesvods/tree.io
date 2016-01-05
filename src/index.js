@@ -168,13 +168,17 @@ class Tree {
     //   }
     // }, 'inOrder')
   }
-  keyWordFilter(key, keyWord){
+  keyWordFilter(key, keyWord, flag){
+    flag = _.isBoolean(flag)?flag:false;
+    if(!key || !keyWord){
+      return this.getTree(flag);
+    }
     return this.filter((tree, node) => {
       if(node[key] === keyWord || (node[this.childrenPropName] && node[this.childrenPropName].length!=0)){
         return true;
       }
       return false;
-    }, true)
+    }, flag)
   }
 }
 module.exports = Tree;

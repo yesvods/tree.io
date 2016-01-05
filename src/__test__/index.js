@@ -132,13 +132,23 @@ describe('Tree class', function(){
     //filter child node
     expectTree.children[0].children.splice(1, 1);
     expectTree.children.splice(1, 2);
-    let filteredTree = tree.keyWordFilter('name', '1.1');
+    let filteredTree = tree.keyWordFilter('name', '1.1', true);
     should(filteredTree).eql(expectTree);
 
     //orgin tree data shouldn't be modified
     let treeData = tree.getTree(true);
     should(originTreeData).eql(treeData)
   })
+
+  it('empty keyword or key should reutrn origin tree', function(){
+    let tree = new Tree(nestedTree);
+    let originTreeData = tree.getTree(true);
+    let filteredTree = tree.keyWordFilter('', '1.1', true);
+    should(filteredTree).eql(originTreeData);
+    filteredTree = tree.keyWordFilter('name', '', true);
+    should(filteredTree).eql(originTreeData);
+  })
+
   it('constructor error detect', function(){
     (function(){
       new Tree(233);
