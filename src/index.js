@@ -46,7 +46,7 @@ class Tree {
     })
   }
   //flag tree to nested tree
-  _f2n(node){
+  _f2n(tree, node){
     if(!node) return {};
     
     //init to [] for none children node
@@ -57,7 +57,7 @@ class Tree {
     }
 
     let children = node[this.childrenPropName].map(id => {
-      return this._f2n(this.tree[id]);
+      return this._f2n(tree, tree[id]);
     })
     
     return _.assign({}, node, {
@@ -65,25 +65,25 @@ class Tree {
     })
   }
   getTree(nested){
-    if(nested) return this._f2n(this.tree['root']);
+    if(nested) return this._f2n(this.tree, this.tree['root']);
     return this.tree;
   }
-  _travesalTree(node, processor, order = 'preOrder'){
+  _travesalTree(tree, node, processor, order = 'preOrder'){
     if(!node) return;
 
     if(order === 'preOrder'){
-      let flag = processor(this.tree, node);
+      let flag = processor(tree, node);
       if(_.isBoolean(flag) && !flag) return;
     }
     if(node[this.childrenPropName]&& node[this.childrenPropName] instanceof Array){
       node[this.childrenPropName].forEach(id => {
-        this._travesalTree(this.tree[id], processor, order)
+        this._travesalTree(tree, tree[id], processor, order)
       })
     }
-    if(order === 'inOrder') processor(this.tree, node);
+    if(order === 'inOrder') processor(tree, node);
   }
   traversal(processor, order){
-    this._travesalTree(this.tree['root'], processor, order);
+    this._travesalTree(this.tree, this.tree['root'], processor, order);
   }
   removeNode(id){
     this.traversal((tree, node) => {
@@ -132,8 +132,17 @@ class Tree {
       }
     })
   }
-  filter(fn){
-    this.traversal((tree, node) => {
+  /**
+   * filter the tree, but not modify the tree data
+   * @param  {Function} fn    
+   * @param  {Boolean}  flag  return nested data
+   * @return {[type]}        [description]
+   */
+  filter(fn, flag){
+    flag = _.isBoolean(flag)?flag:false;
+    //immutable purpose
+    let cloneTree = _.clone(this.tree, true);
+    this._travesalTree(cloneTree, cloneTree['root'], (tree, node) => {
       if(!_.isPlainObject(node)) return;
       if(_.isArray(node[this.childrenPropName])){
         node[this.childrenPropName] = node[this.childrenPropName].filter(id => {
@@ -142,15 +151,30 @@ class Tree {
           return flag;
         });
       }
-    }, 'inOrder')
+    }, 'inOrder');
+
+    if(flag){
+      return this._f2n(cloneTree, cloneTree['root']);
+    }
+    return cloneTree;
+    // this.traversal((tree, node) => {
+    //   if(!_.isPlainObject(node)) return;
+    //   if(_.isArray(node[this.childrenPropName])){
+    //     node[this.childrenPropName] = node[this.childrenPropName].filter(id => {
+    //       var flag = fn(tree, tree[id]);
+    //       if(!flag) delete tree[id]
+    //       return flag;
+    //     });
+    //   }
+    // }, 'inOrder')
   }
   keyWordFilter(key, keyWord){
-    this.filter((tree, node) => {
+    return this.filter((tree, node) => {
       if(node[key] === keyWord || (node[this.childrenPropName] && node[this.childrenPropName].length!=0)){
         return true;
       }
       return false;
-    })
+    }, true)
   }
 }
 module.exports = Tree;

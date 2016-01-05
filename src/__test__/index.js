@@ -125,15 +125,19 @@ describe('Tree class', function(){
     should(tree.getTree(true)).eql(expectTree);
   })
 
-  it('keyWordFilter', function(){
+  it('invoke keyWordFilter without modifing origin tree data', function(){
     let tree = new Tree(nestedTree);
+    let originTreeData = tree.getTree(true);
     let expectTree = _.clone(nestedTree, true);
     //filter child node
     expectTree.children[0].children.splice(1, 1);
     expectTree.children.splice(1, 2);
-    tree.keyWordFilter('name', '1.1');
+    let filteredTree = tree.keyWordFilter('name', '1.1');
+    should(filteredTree).eql(expectTree);
 
-    should(tree.getTree(true)).eql(expectTree);
+    //orgin tree data shouldn't be modified
+    let treeData = tree.getTree(true);
+    should(originTreeData).eql(treeData)
   })
   it('constructor error detect', function(){
     (function(){
