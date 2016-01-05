@@ -174,7 +174,7 @@ class Tree {
       return this.getTree(flag);
     }
     return this.filter((tree, node) => {
-      if(node[key] === keyWord || (node[this.childrenPropName] && node[this.childrenPropName].length!=0)){
+      if(_.contains(node[key],keyWord) || (node[this.childrenPropName] && node[this.childrenPropName].length!=0)){
         return true;
       }
       return false;
